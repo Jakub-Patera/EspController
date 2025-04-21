@@ -12,7 +12,7 @@ macros = {
             '8': {'label': 'Spotify', 'color': (0, 150, 150), 'command': 'open -a "Spotify"', 'icon': 'Spoty', 'shortcut': 'SPF'},
             '9': {'label': 'Mission Control', 'color': (100, 100, 255), 'command': 'osascript -e "tell application \\"System Events\\" to key code 160"', 'icon': 'Missn', 'shortcut': 'MC'},
             'A': {'label': 'Screenshot', 'color': (0, 100, 200), 'command': 'screencapture -c', 'icon': 'Shot', 'shortcut': 'SCR'},
-            'B': {'label': 'Do Not Disturb', 'color': (50, 50, 100), 'command': 'shortcuts run "Do Not Disturb"', 'icon': 'DND', 'shortcut': 'DND'},
+            'B': {'label': 'Do Not Disturb', 'color': (50, 50, 100), 'command': 'shortcuts run "Work"', 'icon': 'DND', 'shortcut': 'DND'},
             'C': {'label': 'Sleep Mac', 'color': (0, 0, 100), 'command': 'pmset sleepnow', 'icon': 'Sleep', 'shortcut': 'ZZZ'}
         }
     },
@@ -90,6 +90,34 @@ end tell
             "color": (255, 100, 100),
             "command": 'osascript -e \'tell application "System Events" to keystroke "npm run dev" & return\''
             },
+            "6": {
+              "label": "run scss",
+              "icon": "SCS",
+              "color": (255, 100, 100),
+              "command": 'osascript -e \'tell application "System Events" to keystroke "npm run watch:sass" & return\''
+
+            },
+            "B": {
+                "label": "NPM Install",
+                "icon": "NPI",
+                "color": (255, 100, 100),
+                "command": 'osascript -e \'tell application "System Events" to keystroke "npm install " & return\''
+            },
+               "7": {
+    "label": "KILL Terminal",
+    "icon": "KTR",
+    "color": (0, 255, 150),
+    "command": '''
+osascript -e 'tell application "Visual Studio Code" to activate'
+osascript -e '
+    tell application "System Events"
+        delay 0.2
+        keystroke "c" using {control down}
+        delay 0.3
+        key code 8 using {control down}
+    end tell'
+'''
+}
 
         }
     },
