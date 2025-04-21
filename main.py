@@ -19,7 +19,7 @@ current_state = STATE_SELECT
 selected_screen = 0
 
 # Dynamické názvy obrazovek podle macros
-screen_names = [screen["name"] for screen in macros.values()]
+screen_names = [screen['name'] for screen in macros.values()]
 
 # Barvy režimů
 screen_colors = [
@@ -30,12 +30,10 @@ screen_colors = [
     (255, 0, 255),
 ]
 
-
 def center_text(line: str, width_chars=21):
     line = line.strip()
     spaces = max((width_chars - len(line)) // 2, 0)
     return " " * spaces + line
-
 
 def send_framebuffer(lines):
     ser.write(b"DISPLAY_FRAME_BEGIN\n")
@@ -44,7 +42,6 @@ def send_framebuffer(lines):
         ser.write(f"DISPLAY_LINE:{i}:{centered_line}\n".encode())
     ser.write(b"DISPLAY_FRAME_END\n")
     print("→ Sent framebuffer")
-
 
 def update_display():
     if current_state == STATE_SELECT:
@@ -55,9 +52,14 @@ def update_display():
         send_framebuffer(lines)
     else:
         macros_for_screen = macros[selected_screen]["keys"]
-        layout = [["1", "2", "3", "A"], ["4", "5", "6", "B"], ["7", "8", "9", "C"]]
+        layout = [
+            ["1", "2", "3", "A"],
+            ["4", "5", "6", "B"],
+            ["7", "8", "9", "C"]
+        ]
 
         lines = ["Active mode:"]
+
 
         for idx, row in enumerate(layout):
             cols = []
@@ -67,21 +69,21 @@ def update_display():
                 cols.append(shortcut)
             lines.append(" | ".join(cols))
             if idx < len(layout) - 1:
-                lines.append(
-                    "---------------------"
-                )  # Přidá prázdný řádek pouze mezi řádky
+                lines.append("---------------------")  # Přidá prázdný řádek pouze mezi řádky
 
         send_framebuffer(lines)
-
 
 def update_led():
     r, g, b = screen_colors[selected_screen % len(screen_colors)]
     ser.write(f"LED_ALL:{r}:{g}:{b}\n".encode())
-
-
 def render_macro_grid(screen_index):
     keys = macros.get(screen_index, {}).get("keys", {})
-    layout = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"], ["A", "B", "C"]]
+    layout = [
+        ["1", "2", "3"],
+        ["4", "5", "6"],
+        ["7", "8", "9"],
+        ["A", "B", "C"]
+    ]
 
     lines = []
     for row in layout:
@@ -95,8 +97,6 @@ def render_macro_grid(screen_index):
         lines.append("───────────────")  # podtržítko pod každým řádkem
 
     return lines
-
-
 # === Inicializace ===
 update_display()
 update_led()
