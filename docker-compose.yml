@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  macro:
+    build: .
+    restart: always
+    devices:
+      - "/dev/tty.usbmodem3101:/dev/tty.usbmodem3101"
